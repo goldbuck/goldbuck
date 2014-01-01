@@ -829,18 +829,18 @@ uint256 static GetOrphanRoot(const CBlock* pblock)
 int64 static GetBlockValue(int nHeight, int64 nFees)
 {
     int64 nSubsidy = 4 * COIN;
+    
+    // Subsidy is cut in half every 1576800 blocks, which will occur approximately every 1 year
+    nSubsidy >>= (nHeight / 1576800); // Litecoin: 1576800 blocks in ~1 years
 
-
-    if(nHeight < 17280) // no block reward within the first 3 days
-        nSubsidy = 0;
-    if(nHeight > 10519200) // no block reward after 5 years
-        nSubsidy = 0;
+    if(nHeight >= 7883996) // special "end of mining" last 4 blocks coin reward
+        nSubsidy = 50000;
 
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 0.35 * 24 * 60 * 60; // GoldBuck: 0.35 days
-static const int64 nTargetSpacing = 15; // GoldBuck: 15 seconds
+static const int64 nTargetTimespan = 6 * 60 * 60; // GoldBuck: 6 hours, every 1080 block
+static const int64 nTargetSpacing = 20; // GoldBuck: 20 seconds
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
 // Thanks: Balthazar for suggesting the following fix
