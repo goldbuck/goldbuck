@@ -8,6 +8,7 @@ What is GoldBuck?
 ================================
 - GoldBuck (GBC) is a Litecoin based cryptocurrency. We want to undo those times when the dollar was 100% covered by the physical gold.
 
+- instamine resistant - thanks to Luckycoin developers
 - 20 seconds block targets
 - 3 confirmations to confirm transaction
 - just one minute to confirm transaction
