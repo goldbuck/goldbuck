@@ -11,7 +11,7 @@ What is GoldBuck?
 - 20 seconds block targets
 - 3 confirmations to confirm transaction
 - just one minute to confirm transaction
-- ~12 240 650 total coins, out of coins approximately in 5 years
+- ~12 420 650 total coins, out of coins approximately in 5 years
 - 4 coins per block
 - subsidy halves every 1 576 800 blocks = approximately every 1 year
 ¨- difficulty retarget every 1080 blocks = every 6 hours, 4x per day
