@@ -887,7 +887,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         // Special difficulty rule for testnet:
         if (fTestNet)
         {
-            // If the new block's timestamp is more than 2* 10 minutes
+            // If the new block's timestamp is more than 2*nTargetSpacing minutes
             // then allow mining of a min-difficulty block.
             if (pblock->nTime > pindexLast->nTime + nTargetSpacing*2)
                 return nProofOfWorkLimit;
@@ -904,33 +904,43 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         return pindexLast->nBits;
     }
 
-    // Litecoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Luckycoin: This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
     int blockstogoback = nInterval-1;
     if ((pindexLast->nHeight+1) != nInterval)
         blockstogoback = nInterval;
-    if (pindexLast->nHeight > COINFIX1_BLOCK) {
-        blockstogoback = nReTargetHistoryFact * nInterval;
-    }
 
-    // Go back by what we want to be nReTargetHistoryFact*nInterval blocks
+    // Go back by what we want to be 14 days worth of blocks
     const CBlockIndex* pindexFirst = pindexLast;
     for (int i = 0; pindexFirst && i < blockstogoback; i++)
         pindexFirst = pindexFirst->pprev;
     assert(pindexFirst);
 
     // Limit adjustment step
-    int64 nActualTimespan = 0;
-    if (pindexLast->nHeight > COINFIX1_BLOCK)
-        // obtain average actual timespan
-        nActualTimespan = (pindexLast->GetBlockTime() - pindexFirst->GetBlockTime())/nReTargetHistoryFact;
-    else
-        nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+    int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
     printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
-    if (nActualTimespan < nTargetTimespan/4)
-        nActualTimespan = nTargetTimespan/4;
-    if (nActualTimespan > nTargetTimespan*4)
-        nActualTimespan = nTargetTimespan*4;
+
+	if(pindexLast->nHeight+1 > 10000)	
+	{
+		if (nActualTimespan < nTargetTimespan/4)
+			nActualTimespan = nTargetTimespan/4;
+		if (nActualTimespan > nTargetTimespan*4)
+			nActualTimespan = nTargetTimespan*4;
+	}
+	else if(pindexLast->nHeight+1 > 5000)
+	{
+		if (nActualTimespan < nTargetTimespan/8)
+			nActualTimespan = nTargetTimespan/8;
+		if (nActualTimespan > nTargetTimespan*4)
+			nActualTimespan = nTargetTimespan*4;
+	}
+	else 
+	{
+		if (nActualTimespan < nTargetTimespan/16)
+			nActualTimespan = nTargetTimespan/16;
+		if (nActualTimespan > nTargetTimespan*4)
+			nActualTimespan = nTargetTimespan*4;
+	}
 
     // Retarget
     CBigNum bnNew;
