@@ -830,10 +830,10 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 {
     int64 nSubsidy = 4 * COIN;
     
-    // Subsidy is cut in half every 1576800 blocks, which will occur approximately every 1 year
-    nSubsidy >>= (nHeight / 1576800); // GoldBuck: 1576800 blocks in ~1 years
+    // Subsidy is cut in half every 1576800 blocks, which will occur approximately every year
+    nSubsidy >>= (nHeight / 1576800); // GoldBuck: 1576800 blocks in ~1 year
 
-    if(nHeight >= 7883996) // special "end of mining" last 4 blocks coin reward
+    if(nHeight >= 7883996) // special "end of mining" coin reward in last 4 blocks
         nSubsidy = 50000;
 
     return nSubsidy + nFees;
