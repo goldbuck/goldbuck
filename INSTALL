@@ -1,0 +1,9 @@
+Building GoldBuck
+
+See doc/readme-qt.rst for instructions on building goldbuck-qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of GoldBuck.
+
+See doc/build-*.txt for instructions on building goldbuck,
+the intended-for-services, no-graphical-interface, reference
+implementation of GoldBuck.
