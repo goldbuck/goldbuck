@@ -14,8 +14,9 @@ What is GoldBuck?
 - just one minute to confirm transaction
 - ~12 420 650 total coins, out of coins approximately in 5 years
 - 4 coins per block
+- reward dont drop under 0.25 GBC
 - subsidy halves every 1 576 800 blocks = approximately every 1 year
-¨- difficulty retarget every 1080 blocks = every 6 hours, 4x per day
+- difficulty retarget every 1080 blocks = every 6 hours, 4x per day
 - extra coin reward on the end of the coin mining, last 4 blocks give a special 50 000 GBC reward as a motivation to keep miners mining
 For more information, as well as an immediately useable, binary version of the GoldBuck client sofware, see http://www.goldbuck.org.
 
